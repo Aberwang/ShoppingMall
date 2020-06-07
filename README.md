@@ -9,6 +9,14 @@ Python + Django + MySQL + Redis + Celery
 
 注：后台管理系统直接使用Django的admin实现
 
+### 关于版本
+
+- Python 3.6
+- Django 2.2.12
+- MySQL 8.0.12
+- Celery 4.3.0
+- Redis 3.2.1
+
 ### 系统主要模块及实现功能
 
 本系统分为了五个模块模块：
