@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load staticfiles %}
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天天生鲜-登录</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+<body>
+	<div class="login_top clearfix">
+		<a href="{% url 'goods:index' %}" class="login_logo"><img src="{% static 'images/logo02.png' %}"></a>
+	</div>
+
+	<div class="login_form_bg">
+		<div class="login_form_wrap clearfix">
+			<div class="login_banner fl"></div>
+			<div class="login_form fr">
+				<div class="login_title clearfix">
+					<h1>用户登录</h1>
+					<a href="/user/register"><u>立即注册</u></a>
+				</div>
+				<div class="form_input">
+					<form method="POST">
+                        {% csrf_token %}
+						<input type="text" name="username" class="name_input" placeholder="请输入用户名" value="{{ username }}">
+						<div class="user_error">{{ error_message }}</div>
+
+						<input type="password" name="pwd" class="pass_input" placeholder="请输入密码" value="{{ pwd }}">
+						<div class="pwd_error">{{ error_message }}</div>
+
+                        <input type="text" name="code" class="code_input" placeholder="请输入验证码">
+                        <img id="valid_img" class="code_input" width="200px" height="35px" src="/user/get_valid_img" alt="验证码" style="margin-left: 130px">
+						<div class="code_error" style="top：150px;position: absolute;">{{ error_message1 }}</div>
+
+                        <div class="more_input clearfix">
+							<input type="checkbox" name="remember" {{ checked }}>
+							<label>记住用户名</label>
+							<a href="#">忘记密码</a>
+						</div>
+						<input type="submit" name="" value="登录" class="input_submit">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<script src='{% static 'js/jquery-3.3.1.min.js' %}'></script>
+<script>
+
+    $('.name_input, .pass_input, .code_error').click(function () {
+        $('.user_error, .pwd_error').text('')
+    });
+
+    //验证码刷新操作
+    $("#valid_img").on("click", function () {
+        $(this)[0].src += "?";
+        // 这个问号是没有实际意义的,它唯一的作用是向浏览器表明: 图片链接发生了变化,图片需要刷新.
+    });
+
+</script>
+
+</body>
+
+</html>

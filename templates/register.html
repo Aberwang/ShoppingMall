@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load staticfiles %}
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天天生鲜-注册</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'js/register.js' %}"></script>
+</head>
+
+<style>
+    .err_msg{
+        color: red;
+    }
+</style>
+
+<body>
+	<div class="register_con">
+		<div class="l_con fl">
+			<a class="reg_logo"><img src="{% static 'images/logo02.png' %}"></a>
+			<div class="reg_slogan">足不出户  ·  新鲜每一天</div>
+			<div class="reg_banner"></div>
+		</div>
+
+		<div class="r_con fr">
+			<div class="reg_title clearfix">
+				<h1>用户注册</h1>
+                <a href="/user/login"><u>已有账号？ 点击登录</u></a>
+			</div>
+			<div class="reg_form clearfix">
+				<form method="post" >
+                    {% csrf_token %}
+				<ul>
+					<li>
+						<label>用户名:</label>
+						<input type="text" name="user_name" id="user_name" value="{{ username }}">
+						<span class="error_tip">{{ error_message1 }}</span>
+					</li>					
+					<li>
+						<label>密码:</label>
+						<input type="password" name="pwd" id="pwd" value="{{ password }}">
+						<span class="error_tip">{{ error_message2 }}</span>
+					</li>
+					<li>
+						<label>确认密码:</label>
+						<input type="password" name="cpwd" id="cpwd" value="{{ cpwd }}">
+						<span class="error_tip">{{ error_message2 }}</span>
+					</li>
+                    <li>
+						<label>手机号码:</label>
+						<input type="text" name="phone" id="phone" value="{{ phone }}">
+						<span class="error_tip">{{ error_message3 }}</span>
+					</li>
+					<li>
+						<label>邮箱:</label>
+						<input type="text" name="email" id="email" value="{{ email }}">
+						<span class="error_tip">{{ error_message4 }}</span>
+					</li>
+					<li class="agreement">
+						<input type="checkbox" name="allow" id="allow" checked="checked">
+						<label>同意“该生鲜系统用户使用协议”</label>
+						<span class="error_tip2">{{ error_message5 }}</span>
+					</li>
+
+					<li class="reg_sub">
+						<input type="submit" value="注 册" name="">
+					</li>
+				</ul>				
+				</form>
+			</div>
+
+		</div>
+
+	</div>
+
+	
+</body>
+
+
+</html>

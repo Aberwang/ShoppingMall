@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load staticfiles %}
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天天生鲜-用户中心</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+<body>
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜商城!</div>
+			<div class="fr">
+				{% if request.user.is_authenticated %}
+                    <div class="login_info fl">
+                        欢迎您：<em>{{ request.user.username }}</em>
+                    </div>
+                    <div class="user_link fl">
+                        <span>|</span>
+					    <a href="{% url 'goods:index' %}">回到首页</a>
+					    <span>|</span>
+					    <a href="{% url 'cart:show' %}">我的购物车</a>
+					    <span>|</span>
+					    <a href="{% url 'user:order' 1 %}">我的订单</a>
+                        <span>|</span>
+                        <a href="{% url 'user:logout' %}">退出登录</a>
+				    </div>
+                {% else %}
+                    <div class="login_btn fl">
+                        <a href="{% url 'user:login' %}">登录</a>
+					    <span>|</span>
+					    <a href="{% url 'user:register' %}">注册</a>
+                    </div>
+				{% endif %}
+			</div>
+		</div>		
+	</div>
+
+	<div class="search_bar clearfix">
+		<a href="{% url 'goods:index' %}" class="logo fl"><img src="{% static 'images/logo.png' %}"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" name="" placeholder="搜索商品">
+			<input type="button" class="input_btn fr" name="" value="搜索">
+		</div>		
+	</div>
+
+	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="{% url 'user:user' %}" {% if page == 'user' %}class="active"{% endif %}>· 个人信息</a></li>
+				<li><a href="{% url 'user:order' 1 %}" {% if page == 'order' %}class="active"{% endif %}>· 全部订单</a></li>
+				<li><a href="{% url 'user:address' %}" {% if page == 'address' %}class="active"{% endif %}>· 收货地址</a></li>
+			</ul>
+		</div>
+        {% block right_content %}{% endblock right_content %}
+
+	</div>
+
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>天天生鲜商城系统</p>
+	</div>
+	
+</body>
+</html>

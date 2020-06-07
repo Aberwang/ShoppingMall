@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+{% load staticfiles %}
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>天天生鲜-用户中心</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+</head>
+
+<style>
+    .error_msg{
+        color: red;
+        margin-left: 30px;
+    }
+</style>
+
+<body>
+	<div class="header_con">
+		<div class="header">
+			<div class="welcome fl">欢迎来到天天生鲜商城!</div>
+			<div class="fr">
+				{% if request.user.is_authenticated %}
+                    <div class="login_info fl">
+                        欢迎您：<em>{{ request.user.username }}</em>
+                    </div>
+                    <div class="user_link fl">
+                        <span>|</span>
+					    <a href="{% url 'goods:index' %}">回到首页</a>
+					    <span>|</span>
+					    <a href="{% url 'cart:show' %}">我的购物车</a>
+					    <span>|</span>
+					    <a href="{% url 'user:users' %}">用户中心</a>
+                        <span>|</span>
+                        <a href="{% url 'user:logout' %}">退出登录</a>
+				    </div>
+                {% else %}
+                    <div class="login_btn fl">
+                        <a href="{% url 'user:login' %}">登录</a>
+					    <span>|</span>
+					    <a href="{% url 'user:register' %}">注册</a>
+                    </div>
+				{% endif %}
+			</div>
+		</div>		
+	</div>
+
+	<div class="search_bar clearfix">
+		<a href="{% url 'goods:index' %}" class="logo fl"><img src="{% static 'images/logo.png' %}"></a>
+		<div class="sub_page_name fl">|&nbsp;&nbsp;&nbsp;&nbsp;用户中心</div>
+		<div class="search_con fr">
+			<input type="text" class="input_text fl" id="search_keywords" name="keywords" placeholder="搜索商品">
+            <input type="button" class="input_btn fr" id="jsSearchBtn" name="search" value="搜索">
+		</div>		
+	</div>
+
+	<div class="main_con clearfix">
+		<div class="left_menu_con clearfix">
+			<h3>用户中心</h3>
+			<ul>
+				<li><a href="{% url 'user:users' %}">· 个人信息</a></li>
+				<li><a href="{% url 'user:order' 1 %}">· 全部订单</a></li>
+				<li><a href="{% url 'user:address' %}" class="active">· 收货地址</a></li>
+			</ul>
+		</div>
+		<div class="right_content clearfix">
+				<h3 class="common_title2">收货地址</h3>
+				<div class="site_con">
+					<dl>
+						<dt>默认收货地址：</dt>
+                        {% if address %}
+						    <dd>{{ address.addr }} （{{ address.receiver }} 收） {{ address.phone }}</dd>
+					    {% else %}
+                            <dd>无默认地址</dd>
+                        {% endif %}
+					</dl>
+				</div>
+				<h3 class="common_title2">添加收货地址</h3>
+				<div class="site_con">
+					<form method="post" action="/user/address/">
+                        {% csrf_token %}
+						<div class="form_group">
+							<label>收件人：</label>
+							<input type="text" name="receiver">
+						</div>
+						<div class="form_group form_group2">
+							<label>详细地址：</label>
+							<textarea class="site_area" name="addr"></textarea>
+						</div>
+						<div class="form_group">
+							<label>邮编：</label>
+							<input type="text" name="email">
+						</div>
+						<div class="form_group">
+							<label>手机：</label>
+							<input type="text" name="phone">
+                            <span class="error_msg">{{ errmsg }}</span>
+						</div>
+
+						<input type="submit" name="" value="提交" class="info_submit">
+                        <span class="error_msg">{{ error_messag }}</span>
+					</form>
+				</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="foot_link">
+			<a href="#">关于我们</a>
+			<span>|</span>
+			<a href="#">联系我们</a>
+			<span>|</span>
+			<a href="#">招聘人才</a>
+			<span>|</span>
+			<a href="#">友情链接</a>		
+		</div>
+		<p>天天生鲜商城系统</p>
+	</div>
+
+	<script type="text/javascript" src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/search.js' %}"></script>
+</body>
+</html>
